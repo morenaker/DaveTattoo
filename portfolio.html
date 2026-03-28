@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="cs" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | David Kňourek - Tetovací studio Hradec Králové</title>
+    <meta name="description" content="Prohlédněte si portfolio tetování. David Kňourek - specialista na black and gray realismus, Hradec Králové.">
+    
+    <!-- Ikona v záložce prohlížeče (Favicon) -->
+    <link rel="icon" href="448274433_1534068484131652_5674228839908532707_n.jpg" type="image/jpeg">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Nastavení Tailwindu (Zkopírováno z indexu pro konzistenci) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#ff6700',
+                            black: '#000000',
+                            gray: '#f9f9f9',
+                            dark: '#1a1a1a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Tactic Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        heading: ['"Tactic Sans Extended"', '"Tactic Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'Tactic Sans';
+            /* Cesta k fontům: src: url('fonts/TacticSans-Regular.woff2') format('woff2'); */
+        }
+        @font-face {
+            font-family: 'Tactic Sans Extended';
+            /* src: url('fonts/TacticSans-Extended.woff2') format('woff2'); */
+            font-weight: 700;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Minimalistický scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffffff; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e5e5e5; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff6700; 
+        }
+
+        /* Čisté animace portfolia */
+        .gallery-item {
+            overflow: hidden;
+            cursor: pointer;
+            background: #f9f9f9;
+            position: relative;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease, opacity 0.3s ease;
+        }
+        
+        /* Efekt přejetí myší na konkrétní fotku s overlayem */
+        .gallery-item:hover img {
+            transform: scale(1.03);
+        }
+
+        /* Třída pro schování položky filtrem */
+        .hidden-item {
+            display: none !important;
+        }
+
+        /* Minimalistický Lightbox */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        #lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: #000000;
+            font-size: 30px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        #lightbox-close:hover {
+            color: #ff6700;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-orange selection:text-white">
+
+    <!-- Navigace -->
+    <nav class="fixed w-full z-50 top-0 bg-white/90 backdrop-blur-sm transition-all border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-xl font-heading font-black tracking-widest uppercase">
+                        Dave<span class="text-brand-orange">Tattoo</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-12">
+                    <a href="index.html#o-mne" class="text-xs uppercase tracking-widest text-gray-500 hover:text-brand-orange transition-colors">O mně</a>
+                    <a href="portfolio.html" class="text-xs uppercase tracking-widest text-brand-orange font-bold transition-colors">Portfolio</a>
+                    <a href="index.html#faq" class="text-xs uppercase tracking-widest text-gray-500 hover:text-brand-orange transition-colors">Info</a>
+                    <a href="index.html#kontakt" class="text-xs uppercase tracking-widest text-gray-500 hover:text-brand-orange transition-colors">Kontakt</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hlavička Portfolia -->
+    <section class="pt-40 pb-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-heading font-black tracking-tighter uppercase leading-none mb-6">
+                Portfolio
+            </h1>
+            <p class="text-lg text-gray-500 font-light max-w-2xl mx-auto tracking-wide">
+                Průřez mou aktuální tvorbou. <br class="hidden sm:block">Fokus na detaily, kontrasty a black & gray realismus.
+            </p>
+        </div>
+    </section>
+
+    <!-- Rozšířená Galerie - Nyní plněna z Google Tabulky -->
+    <section class="pb-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Čisté filtrování -->
+            <div class="flex flex-wrap justify-center gap-8 mb-16" id="filter-buttons">
+                <button onclick="filterGallery('all', this)" class="filter-btn text-xs uppercase tracking-widest text-brand-orange font-bold border-b border-brand-orange pb-1 transition-colors">Vše</button>
+                <button onclick="filterGallery('black-gray', this)" class="filter-btn text-xs uppercase tracking-widest text-gray-400 hover:text-black transition-colors pb-1 border-b border-transparent">Black & Gray</button>
+                <button onclick="filterGallery('realismus', this)" class="filter-btn text-xs uppercase tracking-widest text-gray-400 hover:text-black transition-colors pb-1 border-b border-transparent">Realismus</button>
+                <button onclick="filterGallery('portrety', this)" class="filter-btn text-xs uppercase tracking-widest text-gray-400 hover:text-black transition-colors pb-1 border-b border-transparent">Portréty</button>
+            </div>
+
+            <!-- Mřížka pro Portfolio -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
+                <!-- Indikátor načítání -->
+                <div class="col-span-full text-center text-gray-400 uppercase tracking-widest text-xs py-20" id="loading-indicator">
+                    Načítám galerii z Google Tabulky...
+                </div>
+            </div>
+
+            <!-- Tlačítko pro návrat nebo další akce -->
+            <div class="mt-20 text-center">
+                <a href="index.html#kontakt" class="inline-block bg-black text-white text-xs font-bold uppercase tracking-widest py-4 px-10 hover:bg-brand-orange transition-colors duration-300">
+                    Mám zájem o tetování
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Čistá patička -->
+    <footer class="bg-brand-gray py-12 text-center border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-gray-400 text-xs uppercase tracking-widest font-light">
+                &copy; 2024 David Kňourek | Minimalismus & Realismus
+            </p>
+        </div>
+    </footer>
+
+    <!-- Minimalistický Lightbox -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="Zvětšené tetování">
+    </div>
+
+    <!-- Skripty (Lightbox, Filtr + Integrace Google Sheet) -->
+    <script>
+        // ----------------------------------------------------
+        // INTEGRACE GOOGLE TABULKY
+        // ----------------------------------------------------
+        const SHEET_ID = '1grwuZkgW-QOdnWk7LjzcW6HDorXF425hVwRVECS1VGE';
+        const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+
+        // Mapování číselných kategorií z tabulky na filtry webu
+        const categoryMap = {
+            '1': { filterId: 'black-gray', name: 'Black & Gray' },
+            '2': { filterId: 'realismus', name: 'Realismus' },
+            '3': { filterId: 'portrety', name: 'Portréty' }
+        };
+
+        async function loadGalleryFromGoogleSheet() {
+            const grid = document.getElementById('gallery-grid');
+            
+            try {
+                // Stažení dat
+                const response = await fetch(CSV_URL);
+                if (!response.ok) throw new Error('Odpověď sítě nebyla v pořádku.');
+                
+                const csvText = await response.text();
+                
+                // Odstranění indikátoru načítání
+                grid.innerHTML = '';
+
+                // Rozdělení na řádky a přeskočení hlavičky (prvního řádku)
+                const rows = csvText.split('\n').slice(1);
+                
+                let hasItems = false;
+
+                rows.forEach(row => {
+                    // Ignorovat prázdné řádky
+                    if (!row.trim()) return;
+
+                    // Chytřejší rozdělení CSV (nyní ignoruje čárky uvnitř názvů a správně čte sloupce)
+                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    if (cols.length < 3) return; // Potřebujeme minimálně 3 sloupce (URL, Název, Kategorie)
+
+                    const url = cols[0].trim();
+                    const titleRaw = cols[1] ? cols[1].trim() : '';
+                    const categoryNumRaw = cols[2] ? cols[2].trim() : '';
+
+                    // Očištění názvu a čísla kategorie od případných uvozovek z CSV
+                    const title = titleRaw.replace(/^"|"$/g, '');
+                    const categoryNum = categoryNumRaw.replace(/^"|"$/g, '');
+                    
+                    // Nalezení správné kategorie z mapy (čte ze sloupce C)
+                    const category = categoryMap[categoryNum] || { filterId: 'all', name: 'Neznámá' };
+
+                    // Vygenerování HTML pro položku s přiřazeným 'data-category'
+                    const itemHtml = `
+                        <div class="gallery-item aspect-square bg-gray-100" data-category="${category.filterId}" onclick="openLightbox('${url}')">
+                            <img src="${url}" alt="${title}" loading="lazy">
+                            <!-- Minimalistický hover efekt s informacemi -->
+                            <div class="absolute inset-0 bg-white/90 opacity-0 hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center p-6 text-center">
+                                <span class="text-black text-xs uppercase tracking-widest font-bold mb-2">${title}</span>
+                                <span class="text-brand-orange text-[10px] uppercase tracking-wider">${category.name}</span>
+                            </div>
+                        </div>
+                    `;
+                    grid.insertAdjacentHTML('beforeend', itemHtml);
+                    hasItems = true;
+                });
+
+                if (!hasItems) {
+                    grid.innerHTML = '<div class="col-span-full text-center text-gray-400 uppercase tracking-widest text-xs py-20">Galerie neobsahuje žádné fotky.</div>';
+                }
+
+            } catch (error) {
+                console.error('Chyba při načítání galerie:', error);
+                grid.innerHTML = '<div class="col-span-full text-center text-red-500 uppercase tracking-widest text-xs py-20">Jejda! Nepodařilo se načíst fotky z tabulky. Zkontrolujte prosím přístupová práva odkazu.</div>';
+            }
+        }
+
+        // Spuštění načítání, jakmile se načte HTML stránka
+        document.addEventListener('DOMContentLoaded', loadGalleryFromGoogleSheet);
+
+
+        // ----------------------------------------------------
+        // FUNKCE PRO LIGHTBOX
+        // ----------------------------------------------------
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") closeLightbox();
+        });
+
+        // ----------------------------------------------------
+        // FUNKCE PRO FILTROVÁNÍ
+        // ----------------------------------------------------
+        function filterGallery(category, btnElement) {
+            // Změna stylů tlačítek
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('text-brand-orange', 'font-bold', 'border-brand-orange');
+                btn.classList.add('text-gray-400', 'border-transparent');
+            });
+
+            // Přidání aktivních stylů k právě kliknutému tlačítku
+            btnElement.classList.remove('text-gray-400', 'border-transparent');
+            btnElement.classList.add('text-brand-orange', 'font-bold', 'border-brand-orange');
+
+            // Filtrování fotek
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                
+                if (category === 'all' || itemCategory === category) {
+                    item.classList.remove('hidden-item');
+                } else {
+                    item.classList.add('hidden-item');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

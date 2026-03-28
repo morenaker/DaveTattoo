@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="cs" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Kňourek | Minimalistické tetovací studio Hradec Králové</title>
+    <meta name="description" content="Profesionální tetovací studio v Hradci Králové. David Kňourek - specialista na black and gray realismus.">
+    
+    <!-- Ikona v záložce prohlížeče (Favicon) -->
+    <link rel="icon" href="448274433_1534068484131652_5674228839908532707_n.jpg" type="image/jpeg">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Nastavení Tailwindu -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#ff6700',
+                            black: '#000000',
+                            gray: '#f9f9f9',
+                            dark: '#1a1a1a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Tactic Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        heading: ['"Tactic Sans Extended"', '"Tactic Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'Tactic Sans';
+            /* Cesta k fontům: src: url('fonts/TacticSans-Regular.woff2') format('woff2'); */
+        }
+        @font-face {
+            font-family: 'Tactic Sans Extended';
+            /* src: url('fonts/TacticSans-Extended.woff2') format('woff2'); */
+            font-weight: 700;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Minimalistický scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffffff; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e5e5e5; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff6700; 
+        }
+
+        /* Čisté animace portfolia */
+        .gallery-item {
+            overflow: hidden;
+            cursor: pointer;
+            background: #f9f9f9;
+            position: relative;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease, opacity 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.03);
+            opacity: 0.9;
+        }
+
+        /* Minimalistický Lightbox */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        #lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: #000000;
+            font-size: 30px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        #lightbox-close:hover {
+            color: #ff6700;
+        }
+
+        /* Minimalistický input formuláře */
+        .input-minimal {
+            border: none;
+            border-bottom: 1px solid #e5e5e5;
+            background: transparent;
+            border-radius: 0;
+            padding: 12px 0;
+            transition: border-color 0.3s ease;
+        }
+        .input-minimal:focus {
+            outline: none;
+            border-color: #ff6700;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-orange selection:text-white">
+
+    <!-- Navigace -->
+    <nav class="fixed w-full z-50 top-0 bg-white/90 backdrop-blur-sm transition-all border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-xl font-heading font-black tracking-widest uppercase">
+                        Dave<span class="text-brand-orange">Tattoo</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-12">
+                    <a href="#o-mne" class="text-xs uppercase tracking-widest text-gray-500 hover:text-brand-orange transition-colors">O mně</a>
+                    <a href="portfolio.html" class="text-xs uppercase tracking-widest text-gray-500 hover:text-brand-orange transition-colors">Portfolio</a>
+                    <a href="#faq" class="text-xs uppercase tracking-widest text-gray-500 hover:text-brand-orange transition-colors">Info</a>
+                    <a href="#kontakt" class="text-xs uppercase tracking-widest text-gray-500 hover:text-brand-orange transition-colors">Kontakt</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Úvodní Hero Sekce -->
+    <section class="min-h-screen flex items-center justify-center pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center w-full">
+            
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-heading font-black tracking-tighter uppercase leading-none mb-8 mt-12">
+                David<br/>Kňourek
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-500 font-light max-w-2xl mx-auto mb-12 tracking-wide">
+                Profesionální tatér v Hradci Králové. <br class="hidden md:block">Specializace na detailní <span class="text-black font-medium">black & gray realismus</span>.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 items-center">
+                <a href="#kontakt" class="px-8 py-4 bg-black text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-orange transition-colors duration-300">
+                    Objednat termín
+                </a>
+                <a href="https://www.instagram.com/_davetattoo_/" target="_blank" class="text-xs font-bold uppercase tracking-widest text-black hover:text-brand-orange transition-colors duration-300 flex items-center gap-2 relative group">
+                    <span>Instagram</span>
+                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    <!-- Minimalistická linka pod odkazem -->
+                    <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-orange transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- O mně -->
+    <section id="o-mne" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                
+                <div class="lg:col-span-4">
+                    <span class="text-brand-orange text-xs uppercase tracking-widest font-bold block mb-4">Filozofie</span>
+                    <h2 class="text-3xl md:text-4xl font-heading font-black uppercase tracking-tight">Umění<br>v kůži</h2>
+                </div>
+                
+                <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-12 text-gray-600 font-light leading-relaxed">
+                    <div>
+                        <p class="mb-6">
+                            Jsem tatér působící v srdci Hradce Králové. Zaměřuji se primárně na black and gray realismus. Věřím v sílu stínů, silných kontrastů a nadčasovosti motivů, které se mnou klienti sdílejí.
+                        </p>
+                        <p>
+                            Od detailních portrétů až po temné surreálné motivy. Mým cílem je nejen perfektní výsledek na kůži, ale i naprosto profesionální a čisté prostředí, kde se budeš cítit dobře a uvolněně.
+                        </p>
+                    </div>
+                    <div class="relative">
+                      <img src="img/hero.jpg" alt="Tatér při práci" class="aspect-[4/5] w-full object-cover">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio z Google Tabulky -->
+    <section id="portfolio" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+                <div>
+                    <span class="text-brand-orange text-xs uppercase tracking-widest font-bold block mb-4">Portfolio</span>
+                    <h2 class="text-3xl md:text-4xl font-heading font-black uppercase tracking-tight">Vybrané práce</h2>
+                </div>
+                <a href="portfolio.html" class="mt-6 md:mt-0 text-xs font-bold uppercase tracking-widest text-black hover:text-brand-orange transition-colors duration-300 flex items-center gap-2 group">
+                    Zobrazit celou galerii
+                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
+
+            <!-- Mřížka pro vybrané fotky -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="index-gallery-grid">
+                <div class="col-span-full text-center text-gray-400 uppercase tracking-widest text-xs py-20">
+                    Načítám ukázky prací...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info / FAQ -->
+    <section id="faq" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center">
+                <span class="text-brand-orange text-xs uppercase tracking-widest font-bold block mb-4">Proces</span>
+                <h2 class="text-3xl md:text-4xl font-heading font-black uppercase tracking-tight">Jak to u mě chodí</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+                <div>
+                    <span class="text-6xl md:text-8xl font-heading font-black text-gray-100 mb-4 block leading-none">01</span>
+                    <h4 class="text-sm font-bold uppercase tracking-widest mb-4">Konzultace</h4>
+                    <p class="text-gray-600 font-light leading-relaxed">Napíšeme si přes Instagram nebo formulář. Probereme tvůj nápad, ideální umístění a velikost. Reference jsou vždy vítány.</p>
+                </div>
+                <div>
+                    <span class="text-6xl md:text-8xl font-heading font-black text-gray-100 mb-4 block leading-none">02</span>
+                    <h4 class="text-sm font-bold uppercase tracking-widest mb-4">Návrh & Termín</h4>
+                    <p class="text-gray-600 font-light leading-relaxed">Vybereme termín a pošleš zálohu. Návrh většinou tvořím a ladím přímo s tebou v den sezení, aby dokonale sedl na tělo.</p>
+                </div>
+                <div>
+                    <span class="text-6xl md:text-8xl font-heading font-black text-gray-100 mb-4 block leading-none">03</span>
+                    <h4 class="text-sm font-bold uppercase tracking-widest mb-4">Sezení</h4>
+                    <p class="text-gray-600 font-light leading-relaxed">Dorazíš do mého studia v Hradci Králové. Nalepíme motiv a jdeme na to. Na konci tě vybavím instrukcemi k péči.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontakt s funkčním Formspree formulářem -->
+    <section id="kontakt" class="py-32 bg-brand-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+                
+                <div>
+                    <span class="text-brand-orange text-xs uppercase tracking-widest font-bold block mb-4">Kontakt</span>
+                    <h2 class="text-3xl md:text-4xl font-heading font-black uppercase tracking-tight mb-8">Objednej se</h2>
+                    
+                    <p class="text-gray-600 font-light leading-relaxed mb-12 max-w-md">
+                        Nejrychleji reaguji na Instagramu. Můžeš mi ale nechat zprávu i zde. Rovnou prosím uveď <strong>představu, velikost a umístění</strong>.
+                    </p>
+                    
+                    <div class="space-y-8">
+                        <div>
+                            <span class="block text-xs uppercase tracking-widest text-gray-400 mb-1">Studio</span>
+                            <span class="text-black font-medium">Hradec Králové</span>
+                            <span class="block text-sm text-gray-500 mt-1">Přesná adresa po domluvě termínu</span>
+                        </div>
+                        
+                        <div>
+                            <span class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Sociální sítě</span>
+                            <a href="https://www.instagram.com/_davetattoo_/" target="_blank" class="inline-flex items-center gap-2 text-black hover:text-brand-orange transition-colors font-medium">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                                @_davetattoo_
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulář nakonfigurovaný pro Formspree -->
+                <div>
+                    <form id="contact-form" action="https://formspree.io/f/mreoejaj" method="POST" class="space-y-8 relative">
+                        
+                        <div class="relative">
+                            <!-- Name atribut je nutný pro Formspree -->
+                            <input type="text" id="name" name="Jméno" class="w-full input-minimal text-black text-sm" placeholder="Tvé jméno" required>
+                        </div>
+                        
+                        <div class="relative">
+                            <input type="email" id="email" name="Email" class="w-full input-minimal text-black text-sm" placeholder="E-mail" required>
+                        </div>
+                        
+                        <div class="relative">
+                            <textarea id="message" name="Zpráva" rows="4" class="w-full input-minimal text-black text-sm resize-none" placeholder="Motiv, velikost, umístění..." required></textarea>
+                        </div>
+                        
+                        <!-- Anti-spam ochrana (vyžadována pro free účty u některých služeb) -->
+                        <input type="text" name="_gotcha" style="display:none" />
+                        
+                        <button type="submit" class="bg-black text-white text-xs font-bold uppercase tracking-widest py-4 px-10 hover:bg-brand-orange transition-colors duration-300 w-full sm:w-auto">
+                            Odeslat
+                        </button>
+
+                        <!-- Místo pro stavovou hlášku po odeslání -->
+                        <div id="form-status" class="hidden mt-6 text-xs font-bold uppercase tracking-widest"></div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Čistá patička -->
+    <footer class="bg-white py-12 text-center border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-gray-400 text-xs uppercase tracking-widest font-light">
+                &copy; 2024 David Kňourek | Minimalismus & Realismus
+            </p>
+        </div>
+    </footer>
+
+    <!-- Minimalistický Lightbox -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="Zvětšené tetování">
+    </div>
+
+    <!-- Skript pro načítání z Google Tabulky, Lightbox & Odesílání formuláře bez načtení stránky -->
+    <script>
+        // ----------------------------------------------------
+        // 1. GOOGLE TABULKA PRO ÚVODNÍ STRÁNKU
+        // ----------------------------------------------------
+        const SHEET_ID = '1grwuZkgW-QOdnWk7LjzcW6HDorXF425hVwRVECS1VGE';
+        const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+
+        async function loadIndexGallery() {
+            const grid = document.getElementById('index-gallery-grid');
+            
+            try {
+                const response = await fetch(CSV_URL);
+                if (!response.ok) throw new Error('Odpověď sítě nebyla v pořádku.');
+                
+                const csvText = await response.text();
+                grid.innerHTML = ''; // Smaže indikátor načítání
+
+                const rows = csvText.split('\n').slice(1);
+                let hasItems = false;
+
+                rows.forEach(row => {
+                    if (!row.trim()) return;
+
+                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    if (cols.length < 4) return;
+
+                    const url = cols[0].trim();
+                    const title = cols[1] ? cols[1].replace(/^"|"$/g, '').trim() : '';
+                    const showOnIndex = cols[3] ? cols[3].replace(/^"|"$/g, '').trim() : '';
+
+                    // Filtr pro úvodní stranu - zobrazí jen řádky s '1' ve sloupci D
+                    if (showOnIndex !== '1') return;
+
+                    const itemHtml = `
+                        <div class="gallery-item aspect-square bg-gray-100" onclick="openLightbox('${url}')">
+                            <img src="${url}" alt="${title}" loading="lazy">
+                            <div class="absolute inset-0 bg-white/90 opacity-0 hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center p-6 text-center">
+                                <span class="text-black text-xs uppercase tracking-widest font-bold">${title}</span>
+                            </div>
+                        </div>
+                    `;
+                    grid.insertAdjacentHTML('beforeend', itemHtml);
+                    hasItems = true;
+                });
+
+                if (!hasItems) {
+                    grid.innerHTML = '<div class="col-span-full text-center text-gray-400 uppercase tracking-widest text-xs py-20">Zatím tu nejsou žádné fotky. Vyplň jedničku ve sloupci D v tabulce.</div>';
+                }
+
+            } catch (error) {
+                console.error('Chyba při načítání galerie:', error);
+                grid.innerHTML = '<div class="col-span-full text-center text-brand-orange uppercase tracking-widest text-xs py-20">Nepodařilo se načíst fotky z tabulky.</div>';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadIndexGallery);
+
+        // ----------------------------------------------------
+        // 2. LIGHTBOX FUNKCE
+        // ----------------------------------------------------
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") closeLightbox();
+        });
+
+        // ----------------------------------------------------
+        // 3. ODESÍLÁNÍ FORMSPREE FORMULÁŘE (AJAX)
+        // ----------------------------------------------------
+        const contactForm = document.getElementById("contact-form");
+        const formStatus = document.getElementById("form-status");
+
+        contactForm.addEventListener("submit", async function(event) {
+            event.preventDefault(); // Zabrání klasickému odeslání a přesměrování
+
+            const data = new FormData(event.target);
+            
+            try {
+                // Skryté odeslání dat
+                const response = await fetch(event.target.action, {
+                    method: contactForm.method,
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    formStatus.innerHTML = "Díky za zprávu! Ozvu se co nejdříve.";
+                    formStatus.classList.remove("hidden", "text-brand-orange");
+                    formStatus.classList.add("text-green-600");
+                    contactForm.reset(); // Promaže políčka po úspěšném odeslání
+                } else {
+                    formStatus.innerHTML = "Jejda, něco se pokazilo. Zkus to prosím znovu.";
+                    formStatus.classList.remove("hidden", "text-green-600");
+                    formStatus.classList.add("text-brand-orange");
+                }
+            } catch (error) {
+                formStatus.innerHTML = "Chyba připojení. Zkontroluj svůj internet.";
+                formStatus.classList.remove("hidden", "text-green-600");
+                formStatus.classList.add("text-brand-orange");
+            }
+        });
+    </script>
+</body>
+</html>
