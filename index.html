@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs" class="scroll-smooth">
+<html lang="cs" class="scroll-smooth scroll-pt-24">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     <meta name="description" content="Profesionální tetovací studio v Hradci Králové. David Kňourek - specialista na black and gray realismus.">
     
     <!-- Ikona v záložce prohlížeče (Favicon) -->
-    <link rel="icon" href="448274433_1534068484131652_5674228839908532707_n.jpg" type="image/jpeg">
+    <link rel="icon" href="img/favicon.jpg" type="image/jpeg">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -133,28 +133,64 @@
             outline: none;
             border-color: #ff6700;
         }
+        
+        /* Animace pro položky v mobilním menu */
+        .mobile-link-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease-out;
+        }
+        .menu-open .mobile-link-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-brand-orange selection:text-white">
 
-    <!-- Navigace -->
-    <nav class="fixed w-full z-50 top-0 bg-white/90 backdrop-blur-sm transition-all border-b border-gray-100">
+    <!-- Navigace (Header) -->
+    <header id="main-header" class="fixed w-full z-50 top-0 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-24">
-                <div class="flex-shrink-0">
+                <!-- Logo -->
+                <div class="flex-shrink-0 relative z-50">
                     <a href="#" class="text-xl font-heading font-black tracking-widest uppercase">
                         Dave<span class="text-brand-orange">Tattoo</span>
                     </a>
                 </div>
-                <div class="hidden md:flex space-x-12">
+                
+                <!-- Desktop menu (Viditelné jen na větších displejích) -->
+                <nav class="hidden md:flex space-x-12">
                     <a href="#o-mne" class="text-xs uppercase tracking-widest text-gray-500 hover:text-brand-orange transition-colors">O mně</a>
                     <a href="portfolio.html" class="text-xs uppercase tracking-widest text-gray-500 hover:text-brand-orange transition-colors">Portfolio</a>
                     <a href="#faq" class="text-xs uppercase tracking-widest text-gray-500 hover:text-brand-orange transition-colors">Info</a>
                     <a href="#kontakt" class="text-xs uppercase tracking-widest text-gray-500 hover:text-brand-orange transition-colors">Kontakt</a>
-                </div>
+                </nav>
+
+                <!-- Hamburger button pro mobil -->
+                <button id="mobile-menu-btn" class="md:hidden relative z-50 w-10 h-10 flex flex-col justify-center items-end gap-1.5 focus:outline-none group">
+                    <span class="w-8 h-[2px] bg-black transition-all duration-300 origin-right"></span>
+                    <span class="w-6 h-[2px] bg-black transition-all duration-300 origin-right group-hover:w-8"></span>
+                    <span class="w-8 h-[2px] bg-black transition-all duration-300 origin-right"></span>
+                </button>
             </div>
         </div>
-    </nav>
+    </header>
+
+    <!-- Mobilní menu (Fullscreen overlay) - Umístěno MIMO header kvůli z-index / backdrop-blur konfliktům -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center pt-10 opacity-0 pointer-events-none transition-opacity duration-400 ease-in-out">
+        <div class="flex flex-col items-center space-y-10 w-full px-6">
+            <a href="#o-mne" style="transition-delay: 100ms;" class="mobile-link mobile-link-item text-4xl font-heading font-black uppercase tracking-widest text-black hover:text-brand-orange transition-colors">O mně</a>
+            <a href="portfolio.html" style="transition-delay: 150ms;" class="mobile-link mobile-link-item text-4xl font-heading font-black uppercase tracking-widest text-black hover:text-brand-orange transition-colors">Portfolio</a>
+            <a href="#faq" style="transition-delay: 200ms;" class="mobile-link mobile-link-item text-4xl font-heading font-black uppercase tracking-widest text-black hover:text-brand-orange transition-colors">Info</a>
+            <a href="#kontakt" style="transition-delay: 250ms;" class="mobile-link mobile-link-item text-4xl font-heading font-black uppercase tracking-widest text-black hover:text-brand-orange transition-colors">Kontakt</a>
+            
+            <a href="https://www.instagram.com/_davetattoo_/" target="_blank" style="transition-delay: 300ms;" class="mobile-link mobile-link-item mt-12 text-sm font-bold uppercase tracking-widest text-brand-orange flex items-center gap-2">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                Instagram
+            </a>
+        </div>
+    </div>
 
     <!-- Úvodní Hero Sekce -->
     <section class="min-h-screen flex items-center justify-center pt-24 pb-12">
@@ -202,7 +238,7 @@
                         </p>
                     </div>
                     <div class="relative">
-                      <img src="img/hero.jpg" alt="Tatér při práci" class="aspect-[4/5] w-full object-cover">
+                        <img src="img/hero.jpg" alt="Tatér při práci" class="aspect-[4/5] w-full object-cover">
                     </div>
                 </div>
 
@@ -308,7 +344,7 @@
                             <textarea id="message" name="Zpráva" rows="4" class="w-full input-minimal text-black text-sm resize-none" placeholder="Motiv, velikost, umístění..." required></textarea>
                         </div>
                         
-                        <!-- Anti-spam ochrana (vyžadována pro free účty u některých služeb) -->
+                        <!-- Anti-spam ochrana -->
                         <input type="text" name="_gotcha" style="display:none" />
                         
                         <button type="submit" class="bg-black text-white text-xs font-bold uppercase tracking-widest py-4 px-10 hover:bg-brand-orange transition-colors duration-300 w-full sm:w-auto">
@@ -339,16 +375,102 @@
         <img id="lightbox-img" src="" alt="Zvětšené tetování">
     </div>
 
-    <!-- Skript pro načítání z Google Tabulky, Lightbox & Odesílání formuláře bez načtení stránky -->
+    <!-- Skripty -->
     <script>
         // ----------------------------------------------------
-        // 1. GOOGLE TABULKA PRO ÚVODNÍ STRÁNKU
+        // 1. MOBILNÍ MENU (HAMBURGER) S VLASTNÍM SMOOTH SCROLLEM
+        // ----------------------------------------------------
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const lines = mobileMenuBtn.querySelectorAll('span');
+        let isMenuOpen = false;
+
+        function toggleMobileMenu() {
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                // Zobrazit menu (fade in overlay)
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                mobileMenu.classList.add('opacity-100', 'pointer-events-auto', 'menu-open');
+                
+                // Hamburger na Křížek animace
+                lines[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
+                lines[1].style.opacity = '0';
+                lines[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
+                
+                // Zamezit rolování pozadí
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Skrýt menu
+                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto', 'menu-open');
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                
+                // Křížek zpět na Hamburger
+                lines[0].style.transform = 'none';
+                lines[1].style.opacity = '1';
+                lines[2].style.transform = 'none';
+                
+                // Povolit rolování pozadí
+                document.body.style.overflow = '';
+            }
+        }
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        }
+
+        // Vlastní hladké scrollování pro odkazy v mobilním menu
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                
+                // Zajímá nás to jen u odkazů, které vedou na stejnou stránku (začínají #)
+                if (targetId.startsWith('#')) {
+                    e.preventDefault();
+                    toggleMobileMenu(); // Zavře menu
+                    
+                    // Počkat na dokončení animace zavírání menu (asi 400ms), 
+                    // pak plynule odscrollovat na cíl
+                    setTimeout(() => {
+                        const targetEl = document.querySelector(targetId);
+                        if (targetEl) {
+                            const headerOffset = 96; // Výška hlavičky zhruba
+                            const elementPosition = targetEl.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                            
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: "smooth"
+                            });
+                        }
+                    }, 300);
+                }
+            });
+        });
+
+        // Přidání efektu scrollování pro samotnou hlavičku
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-sm', 'bg-white/95');
+                header.classList.remove('bg-white/90');
+            } else {
+                header.classList.remove('shadow-sm', 'bg-white/95');
+                header.classList.add('bg-white/90');
+            }
+        });
+
+
+        // ----------------------------------------------------
+        // 2. GOOGLE TABULKA PRO ÚVODNÍ STRÁNKU
         // ----------------------------------------------------
         const SHEET_ID = '1grwuZkgW-QOdnWk7LjzcW6HDorXF425hVwRVECS1VGE';
         const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
         async function loadIndexGallery() {
             const grid = document.getElementById('index-gallery-grid');
+            if (!grid) return; // Ochrana pro případ, že na stránce prvek není
             
             try {
                 const response = await fetch(CSV_URL);
@@ -397,7 +519,7 @@
         document.addEventListener('DOMContentLoaded', loadIndexGallery);
 
         // ----------------------------------------------------
-        // 2. LIGHTBOX FUNKCE
+        // 3. LIGHTBOX FUNKCE
         // ----------------------------------------------------
         function openLightbox(imageSrc) {
             const lightbox = document.getElementById('lightbox');
@@ -410,7 +532,7 @@
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         }
 
         document.addEventListener('keydown', function(event) {
@@ -418,40 +540,42 @@
         });
 
         // ----------------------------------------------------
-        // 3. ODESÍLÁNÍ FORMSPREE FORMULÁŘE (AJAX)
+        // 4. ODESÍLÁNÍ FORMSPREE FORMULÁŘE (AJAX)
         // ----------------------------------------------------
         const contactForm = document.getElementById("contact-form");
         const formStatus = document.getElementById("form-status");
 
-        contactForm.addEventListener("submit", async function(event) {
-            event.preventDefault(); // Zabrání klasickému odeslání a přesměrování
-
-            const data = new FormData(event.target);
-            
-            try {
-                // Skryté odeslání dat
-                const response = await fetch(event.target.action, {
-                    method: contactForm.method,
-                    body: data,
-                    headers: { 'Accept': 'application/json' }
-                });
+        if(contactForm) {
+            contactForm.addEventListener("submit", async function(event) {
+                event.preventDefault(); // Zabrání klasickému odeslání a přesměrování
+    
+                const data = new FormData(event.target);
                 
-                if (response.ok) {
-                    formStatus.innerHTML = "Díky za zprávu! Ozvu se co nejdříve.";
-                    formStatus.classList.remove("hidden", "text-brand-orange");
-                    formStatus.classList.add("text-green-600");
-                    contactForm.reset(); // Promaže políčka po úspěšném odeslání
-                } else {
-                    formStatus.innerHTML = "Jejda, něco se pokazilo. Zkus to prosím znovu.";
+                try {
+                    // Skryté odeslání dat
+                    const response = await fetch(event.target.action, {
+                        method: contactForm.method,
+                        body: data,
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    
+                    if (response.ok) {
+                        formStatus.innerHTML = "Díky za zprávu! Ozvu se co nejdříve.";
+                        formStatus.classList.remove("hidden", "text-brand-orange");
+                        formStatus.classList.add("text-green-600");
+                        contactForm.reset(); // Promaže políčka po úspěšném odeslání
+                    } else {
+                        formStatus.innerHTML = "Jejda, něco se pokazilo. Zkus to prosím znovu.";
+                        formStatus.classList.remove("hidden", "text-green-600");
+                        formStatus.classList.add("text-brand-orange");
+                    }
+                } catch (error) {
+                    formStatus.innerHTML = "Chyba připojení. Zkontroluj svůj internet.";
                     formStatus.classList.remove("hidden", "text-green-600");
                     formStatus.classList.add("text-brand-orange");
                 }
-            } catch (error) {
-                formStatus.innerHTML = "Chyba připojení. Zkontroluj svůj internet.";
-                formStatus.classList.remove("hidden", "text-green-600");
-                formStatus.classList.add("text-brand-orange");
-            }
-        });
+            });
+        }
     </script>
 </body>
 </html>
